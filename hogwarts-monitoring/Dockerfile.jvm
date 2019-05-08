@@ -11,7 +11,7 @@
 #
 # Then run the container using:
 #
-# docker run -i --rm -p 8080:8080 karesti/hogwarts-monitoring-jvm
+# docker run -i --rm -p 8081:8081 karesti/hogwarts-monitoring-jvm
 #
 ###
 FROM fabric8/java-alpine-openjdk8-jre
@@ -19,4 +19,6 @@ ENV JAVA_OPTIONS="-Dquarkus.http.host=0.0.0.0 -Djava.util.logging.manager=org.jb
 ENV AB_ENABLED=jmx_exporter
 COPY target/lib/* /deployments/lib/
 COPY target/*-runner.jar /deployments/app.jar
+COPY src/main/resources/hp_characters.csv /deployments/hp_characters.csv
+COPY src/main/resources/hp_spells.csv /deployments/hp_spells.csv
 ENTRYPOINT [ "/deployments/run-java.sh" ]

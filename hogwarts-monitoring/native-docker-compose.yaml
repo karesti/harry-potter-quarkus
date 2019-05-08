@@ -1,0 +1,14 @@
+version: '2'
+
+networks:
+  mynetwork:
+    driver: bridge
+
+services:
+  client-app:
+    image: karesti/hogwarts-monitoring-jvm
+    ports:
+      - "8081:8081"
+    container_name: monitoring-native
+    networks:
+      - mynetwork

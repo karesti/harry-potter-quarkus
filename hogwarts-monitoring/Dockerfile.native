@@ -7,11 +7,11 @@
 #
 # Then, build the image with:
 #
-# docker build -f docker/Dockerfile.native -t karesti/hogwarts-monitoring .
+# docker build -f Dockerfile.native -t karesti/hogwarts-monitoring .
 #
 # Then run the container using:
 #
-# docker run -i --rm -p 8080:8080 karesti/hogwarts-monitoring
+# docker run -i --rm -p 8081:8081 karesti/hogwarts-monitoring
 #
 ###
 FROM registry.fedoraproject.org/fedora-minimal
