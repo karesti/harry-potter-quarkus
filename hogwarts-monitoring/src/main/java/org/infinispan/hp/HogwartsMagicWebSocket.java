@@ -44,29 +44,23 @@ public class HogwartsMagicWebSocket {
          throw new IllegalStateException("Characters store is null. Try restarting the application");
       }
 
-      // Create the query. Every character that it's actually performing magic in Hogwarts
-      QueryFactory queryFactory = Search.getQueryFactory(magic);
-      Query query = queryFactory.from(HPMagic.class)
-            .having("hogwarts").eq(true)
-            .build();
+      try {
+         session.getBasicRemote().sendText("Nobody" + " executed " + "Nothing");
+      } catch (IOException e) {
+         LOGGER.error("The Dark Lord intercepted the monitoring...", e);
+      }
+
+      // Create the query using Search getQueryFactory
+
+      // Create a Continuous Query
 
       // Create a Continuous Query Listener
       ContinuousQueryListener<String, HPMagic> listener = new ContinuousQueryListener<String, HPMagic>() {
-         @Override
-         public void resultJoining(String key, HPMagic value) {
-            try {
-               session.getBasicRemote().sendText(value.getCaster() + " executed " + value.getSpell());
-            } catch (IOException e) {
-               LOGGER.error("The Dark Lord intercepted the monitoring...", e);
-            }
-         }
       };
 
-      // Create a Continuous Query
-      ContinuousQuery<String, HPMagic> continuousQuery = Search.getContinuousQuery(magic);
 
       // Link the query and the listener
-      continuousQuery.addContinuousQueryListener(query, listener);
+
 
       // Track a session with a listener to be able to remove the listener when the web-socket is closed or an error happens
       listeners.put(session, listener);
